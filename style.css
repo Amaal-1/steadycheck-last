@@ -1,0 +1,621 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.app-title {
+    font-size: 2.5rem;
+    color: #4a5568;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.app-subtitle {
+    font-size: 1.1rem;
+    color: #718096;
+    font-weight: 400;
+}
+
+.main-content {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.calculator-section {
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 1rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    background: white;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-hint {
+    display: block;
+    margin-top: 5px;
+    color: #718096;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+/* Autocomplete Styles */
+.autocomplete-container {
+    position: relative;
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover,
+.suggestion-item.highlighted {
+    background: #f8fafc;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.drug-name {
+    font-weight: 600;
+    color: #4a5568;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.drug-info {
+    font-size: 0.875rem;
+    color: #718096;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.half-life-info {
+    background: #e6fffa;
+    color: #234e52;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.half-life-source {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #e6fffa;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #234e52;
+    display: none;
+}
+
+.half-life-source.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.input-with-unit {
+    display: flex;
+    gap: 10px;
+}
+
+.input-with-unit .input-field {
+    flex: 1;
+}
+
+.unit-select {
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    font-size: 16px;
+    min-width: 100px;
+}
+
+/* Disclaimer Styles */
+.disclaimer-section {
+    margin-bottom: 25px;
+}
+
+.disclaimer-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.disclaimer-icon {
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.disclaimer-content strong {
+    display: block;
+    color: #856404;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.disclaimer-content p {
+    color: #856404;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+}
+
+.results-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.results-title {
+    color: #4a5568;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.result-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.result-value {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 1.1rem;
+}
+
+.info-section {
+    background: #e6fffa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #38b2ac;
+}
+
+.info-title {
+    color: #234e52;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.info-text {
+    color: #285e61;
+    line-height: 1.5;
+}
+
+/* Database Section Styles */
+.database-section {
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #e2e8f0;
+}
+
+.database-title {
+    color: #4a5568;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-2px);
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    margin-top: 2px;
+}
+
+.feature-content strong {
+    display: block;
+    color: #4a5568;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+.feature-content p {
+    color: #718096;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.reference-section {
+    background: #f0f4f8;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.reference-title {
+    color: #4a5568;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.reference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.reference-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .app-title {
+        font-size: 2rem;
+    }
+    
+    .main-content,
+    .header {
+        padding: 20px;
+    }
+    
+    .input-with-unit {
+        flex-direction: column;
+    }
+    
+    .unit-select {
+        min-width: auto;
+    }
+    
+    .reference-grid,
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .disclaimer-card {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-title {
+        font-size: 1.8rem;
+    }
+    
+    .app-subtitle {
+        font-size: 1rem;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .main-content,
+    .header {
+        padding: 15px;
+    }
+    
+    .database-section,
+    .disclaimer-section {
+        padding: 15px;
+    }
+}
+/* Previous CSS remains the same, adding these new styles */
+
+/* Enhanced suggestion styling */
+.drug-info {
+    font-size: 0.875rem;
+    color: #718096;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.drug-category {
+    font-style: italic;
+    color: #4a5568;
+}
+
+.drug-badges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tdm-badge {
+    background: #fef5e7;
+    color: #d69e2e;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.75rem;
+    border: 1px solid #f6e05e;
+}
+
+.renal-badge {
+    background: #e6fffa;
+    color: #319795;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.75rem;
+    border: 1px solid #81e6d9;
+}
+
+.half-life-info {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Enhanced suggestions dropdown */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.suggestion-item {
+    padding: 14px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover,
+.suggestion-item.highlighted {
+    background: #f8fafc;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.drug-name {
+    font-weight: 600;
+    color: #4a5568;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+/* Enhanced half-life source styling */
+.half-life-source {
+    margin-top: 8px;
+    padding: 12px 15px;
+    background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #234e52;
+    display: none;
+    border-left: 4px solid #38b2ac;
+    line-height: 1.4;
+}
+
+.half-life-source.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Mobile responsiveness for new elements */
+@media (max-width: 768px) {
+    .drug-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .drug-badges {
+        justify-content: flex-start;
+        width: 100%;
+    }
+    
+    .suggestion-item {
+        padding: 12px 14px;
+    }
+    
+    .suggestions-dropdown {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .drug-badges {
+        gap: 4px;
+    }
+    
+    .tdm-badge,
+    .renal-badge,
+    .half-life-info {
+        font-size: 0.7rem;
+        padding: 1px 4px;
+    }
+}
